@@ -18,9 +18,9 @@ tracking down application errors and interactively debugging your application.
   def create
    @user = User.new(user_params)
    if @user.save
+     log_in @user
      flash[:success] = "Welcome to the Sample App!"
      redirect_to @user
-    #  redirect_to user_url(@user)   #same as above
    else
      render 'new'
    end
