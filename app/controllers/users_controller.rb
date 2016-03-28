@@ -26,6 +26,10 @@ tracking down application errors and interactively debugging your application.
    end
  end
 
+ def edit
+    @user = User.find(params[:id])
+ end
+
   private
 
     def user_params
