@@ -12,7 +12,11 @@ class User < ActiveRecord::Base
   # includes a separate presence validation that specifically catches nil
   # passwords. (Because nil passwords now bypass the main presence validation but
   # are still caught by has_secure_password , this also fixes the duplicate error
-  # message mentioned in Section 7.3.3.)
+  # message mentioned in Section 7.3.3.).
+  # Basically what this is doing is that when updating/editing the user attributes, if 
+  # the user does not update the password and confirmation fields (leaves it nil)
+  # then it will keep its password as the original password that they
+  # used when they signed up.
 
 
   # Returns the hash digest of the given string.
