@@ -1,6 +1,10 @@
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
 
+<!-- Because we included will_paginate both above and below the user list, the pagination links appear in both places. -->
+
+<%= will_paginate %>
+
 <ul class="users">
   <% @users.each do |user| %>
     <li>
@@ -9,3 +13,5 @@
     </li>
   <% end %>
 </ul>
+
+<%= will_paginate %>
