@@ -1,5 +1,7 @@
 == README
 
+Note!! Need to do 10.3 Email in production
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
