@@ -99,6 +99,11 @@ class User < ActiveRecord::Base
     UserMailer.password_reset(self).deliver_now
   end
 
+  # Returns true if a password reset has expired. “Password reset sent earlier than thirty minutes ago.”
+  def password_reset_expired?
+    reset_sent_at < 30.minutes.ago
+  end
+
   private
 
   # Converts email to all lower-case.
