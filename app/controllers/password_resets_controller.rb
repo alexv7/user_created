@@ -1,4 +1,7 @@
 class PasswordResetsController < ApplicationController
+  before_action :get_user,   only: [:edit, :update]
+  before_action :valid_user, only: [:edit, :update]
+
   def new
   end
 
@@ -17,4 +20,33 @@ class PasswordResetsController < ApplicationController
 
   def edit
   end
+
+  private
+
+    def get_user
+          @user = User.find_by(email: params[:email])
+    end
+
+    # Confirms a valid user.
+    def valid_user
+      unless (@user && @user.activated? &&
+              @user.authenticated?(:reset, params[:id]))
+        redirect_to root_url
+      end
+    end
+
 end
+
+
+
+# In Listing 10.51, compare the use of
+#
+# authenticated?(:reset, params[:id])
+# to
+#
+# authenticated?(:remember, cookies[:remember_token])
+# in Listing 10.26 and
+#
+# authenticated?(:activation, params[:id])
+# in Listing 10.29. Together, these three uses complete the authentication
+# methods shown in Table 10.1.
