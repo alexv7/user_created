@@ -38,10 +38,37 @@ class User < ActiveRecord::Base
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
+  # $ rails console
+  #   >> a = [1, 2, 3]
+  #   >> a.length
+  #   => 3
+  #   >> a.send(:length)
+  #   => 3
+  #   >> a.send('length')
+  #   => 3
+
+    # >> user = User.first
+    # >> user.activation_digest
+    # => "$2a$10$4e6TFzEJAVNyjLv8Q5u22ensMt28qEkx0roaZvtRcp6UZKRM6N9Ae"
+    # >> user.send(:activation_digest)
+    # => "$2a$10$4e6TFzEJAVNyjLv8Q5u22ensMt28qEkx0roaZvtRcp6UZKRM6N9Ae"
+    # >> user.send('activation_digest')
+    # => "$2a$10$4e6TFzEJAVNyjLv8Q5u22ensMt28qEkx0roaZvtRcp6UZKRM6N9Ae"
+    # >> attribute = :activation
+    # >> user.send("#{attribute}_digest")
+    # => "$2a$10$4e6TFzEJAVNyjLv8Q5u22ensMt28qEkx0roaZvtRcp6UZKRM6N9Ae"
+
   # Returns true if the given token matches the digest.
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  # def authenticated?(remember_token)
+  #   return false if remember_digest.nil?
+  #   BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  # end
+
+  # Returns true if the given token matches the digest.
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   # Forgets a user.
